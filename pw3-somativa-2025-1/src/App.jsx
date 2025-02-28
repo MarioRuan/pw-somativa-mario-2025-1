@@ -1,6 +1,15 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import './App.css'
-import BookCard from './components/BookCard'
-import capa_livro from './assets/cavernas_aco.jpg'
+import Container from './components/layout/Container'
+
+// import de paginas
+import Home from './components/pages/Home.jsx'
+import CreateBook from './components/pages/CreateBook.jsx'
+import ListBook from './components/pages/ListBook.jsx'
+
+// Importação da navbar
+import NavBar from './components/layout/NavBar'
 
 function App() {
   
@@ -8,27 +17,26 @@ function App() {
   return (
     <>
       <div>
-        <h1>PW3 - WEBAPP - LIVRARIA</h1>
-        
-        <BookCard 
-          titulo='As Carvenas de Aço' 
-          autor='Isaac Azimov'
-          imagem={capa_livro}/>
 
-        {/* <BookCard 
-          titulo='O sol Desvelado' 
-          autor='Isaac Azimov'
-          imagem='Uma imagem vai aparecer aqui'/>
+        <BrowserRouter>
 
-        <BookCard 
-          titulo='O Fim da Infancia' 
-          autor='Arthur C. Clack'
-          imagem='Uma imagem vai aparecer aqui'/>
+          <Container>
 
-        <BookCard 
-          titulo='Neuromancer' 
-          autor='Willian Gibson'
-          imagem='Uma imagem vai aparecer aqui'/> */}
+            <Routes>
+              <Route path='/' element={<NavBar/>}>
+
+                <Route path='/' element={<Home/>}/>
+                <Route path='newBook' element={<CreateBook/>}/>
+                <Route path='listBook'element={<ListBook/>}/>
+
+              </Route>
+
+            </Routes>
+          </Container>
+
+        </BrowserRouter>
+
+
       </div>
     </>
   )
