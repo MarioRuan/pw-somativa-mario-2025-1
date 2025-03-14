@@ -8,7 +8,7 @@ const NavBar = () =>{
         <nav className={style.navbar}>
             <ul className={style.list}>
                 <Link to='/'>
-                <li className={style.item}><img src='./book.jpeg' alt="logotipo" className={style.logo}/></li>
+                <li className={style.item}><img src='./book.png' alt="logotipo" className={style.logo}/></li>
                 </Link>
 
                 <Link to='/'>
