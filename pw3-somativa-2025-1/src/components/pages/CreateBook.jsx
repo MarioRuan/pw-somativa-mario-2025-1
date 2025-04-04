@@ -18,7 +18,7 @@ const CreateBook = () =>{
 
     //Captura de daods do elemento de select
     function handlerChangeCategory(event){
-        setBook({... book, cod_categoria:event.target.options[event.target.selectedIndex].text})
+        setBook({... book, cod_categoria:event.target.options[event.target.selectedIndex].value})
         console.log(book)
     }
 
@@ -26,24 +26,46 @@ const CreateBook = () =>{
     function submit(event){
         event.preventDefault();
         console.log(book);
+        insertBook(book);
     }
 
     //recupera os dados de categoria da apirest:
     useEffect(()=>{
-        fetch('http://127.0.0.1:5000/listagemCateorias',{
-            method:"GET",
+        fetch('http://127.0.0.1:5000/listagemCateorias', {
+            method:'GET',
             headers:{
                 'Content-Type':'application/json',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Headers':'*'
-            }
-        }).then((response)=>{
-            console.log(response.json());
+            },
+        }).then((resp)=>
+            resp.json()
+        ).then((categorias)=>{
+            console.log('TESTE: ' + categorias.data);
         }).catch((error)=>{
-            console.log(error)
+            console.log('ERRO: ' + error);
         })
-    },[]);
+    }, []);
 
+    // INSERÇÃO DE LIVRO
+    function insertBook(book)
+    {
+        useEffect(()=>{
+            fetch('http://127.0.0.1:5000/inserirlivro',{
+                method:"POST",
+                mode:'cors',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin':'*',
+                    'Access-Control-Allow-Headers':'*'
+                },body:JSON.stringify(book)
+            }).then((response)=>{
+                response.json();
+            }).catch((error)=>{
+                console.log(error)
+            })
+        },[]);
+    }
     return(
         <section className={style.create_book_container}>
             <h1>CADASTRO DE LIVRO</h1>
@@ -78,10 +100,11 @@ const CreateBook = () =>{
                     id='cod_categoria'
                     text='Categoria do livro'
                     handlerChange={handlerChangeCategory}
+                    options={categories}
                 />
 
                 <Button
-                    label='CADASTRAR'
+                    label='CADASTRAR LIVRO'
                 />
             </form>
         </section>
