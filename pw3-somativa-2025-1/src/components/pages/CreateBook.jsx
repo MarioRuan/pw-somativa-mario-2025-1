@@ -4,11 +4,15 @@ import Input from "../form/Input";
 import Select from "../form/Select";
 import Button from "../form/Button";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const CreateBook = () =>{
     const [book,setBook] = useState({});
 
     const [categories,setCategories] = useState([]);
+
+    const navigate = useNavigate();
 
     //Captura de dados do elemento de input
     function handlerChangeBook(event){
@@ -42,29 +46,33 @@ const CreateBook = () =>{
             resp.json()
         ).then((categorias)=>{
             console.log('TESTE: ' + categorias.data);
+            setCategories(categorias.data)
         }).catch((error)=>{
             console.log('ERRO: ' + error);
         })
     }, []);
 
     // INSERÇÃO DE LIVRO
-    function insertBook(book)
-    {
-        useEffect(()=>{
-            fetch('http://127.0.0.1:5000/inserirlivro',{
-                method:"POST",
-                mode:'cors',
-                headers:{
-                    'Content-Type':'application/json',
-                    'Access-Control-Allow-Origin':'*',
-                    'Access-Control-Allow-Headers':'*'
-                },body:JSON.stringify(book)
-            }).then((response)=>{
-                response.json();
-            }).catch((error)=>{
-                console.log(error)
-            })
-        },[]);
+    function insertBook(book) {
+        
+        fetch('http://127.0.0.1:5000/inserirLivro', {
+            method:'POST',
+            mode:'cors',
+            headers:{
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Headers':'*'
+            },
+            body:JSON.stringify(book)
+        }).then((resp)=>
+            resp.json()
+        ).then((respJSON)=>{
+            console.log('RESPOSTA: ' + respJSON);
+            navigate('/listBook')
+        }).catch((error)=>{
+            console.log('ERRO: ' + error);
+        })
+
     }
     return(
         <section className={style.create_book_container}>
