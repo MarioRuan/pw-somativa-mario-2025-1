@@ -7,6 +7,7 @@ import Container from './components/layout/Container'
 import Home from './components/pages/Home.jsx'
 import CreateBook from './components/pages/CreateBook.jsx'
 import ListBook from './components/pages/ListBook.jsx'
+import DetailBook from './components/pages/DetailBook.jsx'
 
 // Importação da navbar
 import NavBar from './components/layout/NavBar'
@@ -28,7 +29,7 @@ function App() {
                 <Route path='/' element={<Home/>}/>
                 <Route path='newBook' element={<CreateBook/>}/>
                 <Route path='listBook'element={<ListBook/>}/>
-
+                <Route path='/detailBook/:cod_livro' element={<DetailBook/>}/>
               </Route>
 
             </Routes>
